@@ -780,7 +780,36 @@
         .replaceAll("'", "&#039;");
     }
 
+document.addEventListener("keydown", function(event) {
+  if (event.key !== "Enter") return;
 
+  const active = document.activeElement;
+
+  // Let Enter work normally inside the description box
+  if (active.tagName === "TEXTAREA") {
+    return;
+  }
+
+  const focusable = Array.from(
+    document.querySelectorAll(
+      'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])'
+    )
+  ).filter(el => {
+    return el.offsetParent !== null;
+  });
+
+  const currentIndex = focusable.indexOf(active);
+
+  if (currentIndex === -1) return;
+
+  event.preventDefault();
+
+  const next = focusable[currentIndex + 1];
+
+  if (next) {
+    next.focus();
+  }
+});
     showDate();
     loadToday();
   </script>
