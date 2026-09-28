@@ -1,21 +1,29 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#151515">
+
   <title>Meal & Macro Tracker</title>
 
   <style>
     :root {
       --bg: #151515;
       --panel: #242424;
-      --panel-2: #303030;
+      --panel2: #303030;
       --orange: #f58220;
+      --orange-dark: #d86e10;
       --text: #ffffff;
       --muted: #b8b8b8;
-      --danger: #d9534f;
-      --success: #4caf50;
+      --border: #4a4a4a;
+      --success: #69c96b;
+      --danger: #ff7772;
     }
 
     * {
@@ -24,121 +32,209 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      padding: 0;
+
       background: var(--bg);
       color: var(--text);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
     }
 
     .app {
+      width: 100%;
       max-width: 700px;
+
       margin: 0 auto;
-      padding: 18px;
+
+      padding:
+        18px
+        18px
+        calc(30px + env(safe-area-inset-bottom));
     }
 
     h1 {
-      margin: 0 0 6px;
+      margin: 4px 0 5px;
+
       font-size: 28px;
+    }
+
+    h2 {
+      margin:
+        0
+        0
+        14px;
+
+      font-size: 20px;
     }
 
     .date {
       color: var(--muted);
+
       margin-bottom: 20px;
     }
 
     .card {
       background: var(--panel);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.25);
-    }
 
-    .card h2 {
-      margin-top: 0;
-      font-size: 20px;
+      border-radius: 14px;
+
+      padding: 16px;
+
+      margin-bottom: 16px;
+
+      box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.25);
     }
 
     .macro-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
       gap: 10px;
     }
 
     .macro-box {
-      background: var(--panel-2);
+      background: var(--panel2);
+
       border-radius: 10px;
+
       padding: 12px;
+
       text-align: center;
     }
 
-    .macro-box .label {
+    .macro-label {
       display: block;
-      font-size: 12px;
+
       color: var(--muted);
+
+      font-size: 12px;
+
       margin-bottom: 5px;
     }
 
-    .macro-box .value {
-      font-size: 22px;
-      font-weight: bold;
+    .macro-value {
       color: var(--orange);
+
+      font-size: 22px;
+
+      font-weight: bold;
     }
 
     button {
       width: 100%;
-      border: 0;
+
+      border: none;
+
       border-radius: 10px;
+
       padding: 14px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
+
       margin-top: 10px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+
+      cursor: default;
     }
 
     .primary {
       background: var(--orange);
+
       color: #111;
     }
 
-    .secondary {
-      background: var(--panel-2);
-      color: var(--text);
-      border: 1px solid #4b4b4b;
+    .primary:active {
+      background: var(--orange-dark);
     }
 
-    .danger {
-      background: var(--danger);
+    .secondary {
+      background: var(--panel2);
+
+      color: var(--text);
+
+      border:
+        1px solid
+        var(--border);
+    }
+
+    .ai-button {
+      background: #3a3a3a;
+
       color: white;
+
+      border:
+        1px solid
+        var(--orange);
     }
 
     label {
       display: block;
+
       margin-top: 12px;
+
       margin-bottom: 5px;
+
       font-size: 14px;
+
       color: var(--muted);
     }
 
     input,
-    select,
-    textarea {
+    textarea,
+    select {
       width: 100%;
-      padding: 12px;
+
+      border:
+        1px solid
+        #555;
+
       border-radius: 8px;
-      border: 1px solid #555;
+
+      padding: 12px;
+
       background: #1c1c1c;
+
       color: white;
+
       font-size: 16px;
+
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--orange);
     }
 
     textarea {
-      min-height: 80px;
+      min-height: 85px;
+
       resize: vertical;
     }
 
     .row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
+
       gap: 10px;
     }
 
@@ -146,266 +242,661 @@
       display: none;
     }
 
-    .meal-item {
-      background: var(--panel-2);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .meal-name {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .meal-description {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .meal-macros {
-      margin-top: 8px;
-      font-size: 14px;
-    }
-
     .status {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
       display: none;
+
+      margin-top: 12px;
+
+      padding: 11px;
+
+      border-radius: 8px;
+
+      font-size: 14px;
+
+      line-height: 1.4;
     }
 
     .status.success {
       display: block;
-      background: rgba(76, 175, 80, .18);
-      color: #8dd98f;
+
+      color: #a9e8aa;
+
+      background:
+        rgba(76, 175, 80, 0.18);
     }
 
     .status.error {
       display: block;
-      background: rgba(217, 83, 79, .18);
-      color: #ff9b98;
+
+      color: #ffaaa6;
+
+      background:
+        rgba(217, 83, 79, 0.18);
+    }
+
+    .status.info {
+      display: block;
+
+      color: #ffd0a3;
+
+      background:
+        rgba(245, 130, 32, 0.15);
+    }
+
+    .meal-item {
+      background: var(--panel2);
+
+      border-radius: 10px;
+
+      padding: 12px;
+
+      margin-bottom: 10px;
+    }
+
+    .meal-name {
+      font-size: 16px;
+
+      font-weight: bold;
+    }
+
+    .meal-time {
+      float: right;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      font-weight: normal;
+    }
+
+    .meal-description {
+      color: var(--muted);
+
+      margin-top: 5px;
+
+      font-size: 14px;
+
+      line-height: 1.4;
+    }
+
+    .meal-macros {
+      margin-top: 9px;
+
+      font-size: 14px;
+    }
+
+    .small-text {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.4;
+
+      margin-top: 8px;
+    }
+
+    .section-divider {
+      border: 0;
+
+      border-top:
+        1px solid
+        #3d3d3d;
+
+      margin:
+        18px
+        0;
     }
 
     @media (min-width: 600px) {
       .macro-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns:
+          repeat(3, 1fr);
       }
     }
   </style>
 </head>
 
+
 <body>
-  <div class="app">
 
-    <h1>Meal & Macro Tracker</h1>
-    <div class="date" id="todayDate"></div>
+<div class="app">
 
-    <div class="card">
-      <h2>Today's Totals</h2>
+  <h1>Meal & Macro Tracker</h1>
 
-      <div class="macro-grid">
-        <div class="macro-box">
-          <span class="label">Calories</span>
-          <span class="value" id="totalCalories">0</span>
-        </div>
-
-        <div class="macro-box">
-          <span class="label">Protein</span>
-          <span class="value" id="totalProtein">0g</span>
-        </div>
-
-        <div class="macro-box">
-          <span class="label">Carbs</span>
-          <span class="value" id="totalCarbs">0g</span>
-        </div>
-
-        <div class="macro-box">
-          <span class="label">Fat</span>
-          <span class="value" id="totalFat">0g</span>
-        </div>
-
-        <div class="macro-box">
-          <span class="label">Fiber</span>
-          <span class="value" id="totalFiber">0g</span>
-        </div>
-
-        <div class="macro-box">
-          <span class="label">Sodium</span>
-          <span class="value" id="totalSodium">0mg</span>
-        </div>
-      </div>
-    </div>
+  <div
+    class="date"
+    id="todayDate">
+  </div>
 
 
-    <div class="card">
-      <button class="primary" onclick="showMealForm()">
-        + Log Meal
-      </button>
+  <!-- TODAY TOTALS -->
 
-      <button class="secondary" onclick="showCheckInForm()">
-        Daily Check-In
-      </button>
-    </div>
+  <div class="card">
 
+    <h2>Today's Totals</h2>
 
-    <div class="card hidden" id="mealFormCard">
-      <h2>Log Meal</h2>
+    <div class="macro-grid">
 
-      <label>Meal</label>
-      <select id="mealType">
-        <option>Breakfast</option>
-        <option>Lunch</option>
-        <option>Dinner</option>
-        <option>Snack</option>
-        <option>Other</option>
-      </select>
+      <div class="macro-box">
 
-      <label>Description</label>
-      <textarea
-        id="mealDescription"
-        placeholder="Example: Chicken breast, rice and corn"
-      ></textarea>
+        <span class="macro-label">
+          Calories
+        </span>
 
-      <div class="row">
-        <div>
-          <label>Protein (g)</label>
-          <input type="number" step="0.1" id="protein" />
-        </div>
+        <span
+          class="macro-value"
+          id="totalCalories">
+          0
+        </span>
 
-        <div>
-          <label>Carbs (g)</label>
-          <input type="number" step="0.1" id="carbs" />
-        </div>
       </div>
 
-      <div class="row">
-        <div>
-          <label>Fat (g)</label>
-          <input type="number" step="0.1" id="fat" />
-        </div>
 
-        <div>
-          <label>Fiber (g)</label>
-          <input type="number" step="0.1" id="fiber" />
-        </div>
+      <div class="macro-box">
+
+        <span class="macro-label">
+          Protein
+        </span>
+
+        <span
+          class="macro-value"
+          id="totalProtein">
+          0g
+        </span>
+
       </div>
 
-      <div class="row">
-        <div>
-          <label>Sodium (mg)</label>
-          <input type="number" step="1" id="sodium" />
-        </div>
 
-        <div>
-          <label>Calories</label>
-          <input type="number" step="1" id="calories" />
-        </div>
+      <div class="macro-box">
+
+        <span class="macro-label">
+          Carbs
+        </span>
+
+        <span
+          class="macro-value"
+          id="totalCarbs">
+          0g
+        </span>
+
       </div>
 
-      <button class="primary" onclick="logMeal()">
-        Save Meal
-      </button>
 
-      <button class="secondary" onclick="hideMealForm()">
-        Cancel
-      </button>
+      <div class="macro-box">
 
-      <div class="status" id="mealStatus"></div>
-    </div>
+        <span class="macro-label">
+          Fat
+        </span>
 
+        <span
+          class="macro-value"
+          id="totalFat">
+          0g
+        </span>
 
-    <div class="card hidden" id="checkInCard">
-      <h2>Daily Check-In</h2>
-
-      <div class="row">
-        <div>
-          <label>Weight</label>
-          <input type="number" step="0.1" id="weight" />
-        </div>
-
-        <div>
-          <label>Waist</label>
-          <input type="number" step="0.1" id="waist" />
-        </div>
       </div>
 
-      <label>Resistance Training Minutes</label>
-      <input type="number" step="1" id="resistanceMinutes" />
 
-      <label>Muscle Groups</label>
-      <input
-        type="text"
-        id="muscleGroups"
-        placeholder="Example: Chest, shoulders, triceps"
-      />
+      <div class="macro-box">
 
-      <label>Cardio Minutes</label>
-      <input type="number" step="1" id="cardioMinutes" />
+        <span class="macro-label">
+          Fiber
+        </span>
 
-      <label>Cardio Type</label>
-      <input
-        type="text"
-        id="cardioType"
-        placeholder="Example: Incline treadmill"
-      />
+        <span
+          class="macro-value"
+          id="totalFiber">
+          0g
+        </span>
 
-      <label>Steps</label>
-      <input type="number" step="1" id="steps" />
-
-      <label>Sleep Hours</label>
-      <input type="number" step="0.1" id="sleep" />
-
-      <button class="primary" onclick="saveDailyCheckIn()">
-        Save Check-In
-      </button>
-
-      <button class="secondary" onclick="hideCheckInForm()">
-        Cancel
-      </button>
-
-      <div class="status" id="checkInStatus"></div>
-    </div>
-
-
-    <div class="card">
-      <h2>Today's Meals</h2>
-
-      <div id="mealList">
-        Loading...
       </div>
 
-      <button class="secondary" onclick="loadToday()">
-        Refresh
-      </button>
+
+      <div class="macro-box">
+
+        <span class="macro-label">
+          Sodium
+        </span>
+
+        <span
+          class="macro-value"
+          id="totalSodium">
+          0mg
+        </span>
+
+      </div>
+
     </div>
 
   </div>
 
 
-  <script>
-    const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbzmtoF1u1ur7K2lM5QtW9ETV72DGEXOv6QhFNAjKnfOPVRF9JyoPPHaHLza_At9gOtR/exec";
+
+  <!-- MAIN BUTTONS -->
+
+  <div class="card">
+
+    <button
+      class="primary"
+      onclick="showMealForm()">
+      + Log Meal
+    </button>
+
+    <button
+      class="secondary"
+      onclick="showCheckInForm()">
+      Daily Check-In
+    </button>
+
+  </div>
 
 
-    function getTodayString() {
-      const now = new Date();
 
-      const year = now.getFullYear();
-      const month =
-        String(now.getMonth() + 1).padStart(2, "0");
-      const day =
-        String(now.getDate()).padStart(2, "0");
+  <!-- MEAL ENTRY -->
 
-      return `${year}-${month}-${day}`;
-    }
+  <div
+    class="card hidden"
+    id="mealFormCard">
+
+    <h2>Log Meal</h2>
 
 
-    function showDate() {
-      const now = new Date();
+    <label for="mealType">
+      Meal
+    </label>
 
-      document.getElementById("todayDate").textContent =
+    <select id="mealType">
+
+      <option value="Breakfast">
+        Breakfast
+      </option>
+
+      <option value="Lunch">
+        Lunch
+      </option>
+
+      <option value="Dinner">
+        Dinner
+      </option>
+
+      <option value="Snack">
+        Snack
+      </option>
+
+      <option value="Other">
+        Other
+      </option>
+
+    </select>
+
+
+    <label for="mealDescription">
+      Description
+    </label>
+
+    <textarea
+      id="mealDescription"
+      placeholder="Example: 6 oz chicken breast, 1/2 cup rice and 1/2 cup corn">
+    </textarea>
+
+
+    <button
+      type="button"
+      class="ai-button"
+      id="aiButton"
+      onclick="estimateMealWithAI()">
+      ✨ Estimate Macros with AI
+    </button>
+
+
+    <div
+      class="status"
+      id="aiStatus">
+    </div>
+
+
+    <hr class="section-divider">
+
+
+    <div class="row">
+
+      <div>
+
+        <label for="protein">
+          Protein (g)
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="protein">
+
+      </div>
+
+
+      <div>
+
+        <label for="carbs">
+          Carbs (g)
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="carbs">
+
+      </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div>
+
+        <label for="fat">
+          Fat (g)
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="fat">
+
+      </div>
+
+
+      <div>
+
+        <label for="fiber">
+          Fiber (g)
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="fiber">
+
+      </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div>
+
+        <label for="sodium">
+          Sodium (mg)
+        </label>
+
+        <input
+          type="number"
+          inputmode="numeric"
+          step="1"
+          id="sodium">
+
+      </div>
+
+
+      <div>
+
+        <label for="calories">
+          Calories
+        </label>
+
+        <input
+          type="number"
+          inputmode="numeric"
+          step="1"
+          id="calories">
+
+      </div>
+
+    </div>
+
+
+    <div class="small-text">
+      AI nutrition values are estimates. Review the numbers before saving.
+    </div>
+
+
+    <button
+      class="primary"
+      id="saveMealButton"
+      onclick="logMeal()">
+      Save Meal
+    </button>
+
+
+    <button
+      class="secondary"
+      onclick="hideMealForm()">
+      Cancel
+    </button>
+
+
+    <div
+      class="status"
+      id="mealStatus">
+    </div>
+
+  </div>
+
+
+
+  <!-- DAILY CHECK-IN -->
+
+  <div
+    class="card hidden"
+    id="checkInCard">
+
+    <h2>Daily Check-In</h2>
+
+
+    <div class="row">
+
+      <div>
+
+        <label for="weight">
+          Weight
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="weight">
+
+      </div>
+
+
+      <div>
+
+        <label for="waist">
+          Waist
+        </label>
+
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.1"
+          id="waist">
+
+      </div>
+
+    </div>
+
+
+    <label for="resistanceMinutes">
+      Resistance Training Minutes
+    </label>
+
+    <input
+      type="number"
+      inputmode="numeric"
+      step="1"
+      id="resistanceMinutes">
+
+
+    <label for="muscleGroups">
+      Muscle Groups
+    </label>
+
+    <input
+      type="text"
+      id="muscleGroups"
+      placeholder="Example: Chest, shoulders, triceps">
+
+
+    <label for="cardioMinutes">
+      Cardio Minutes
+    </label>
+
+    <input
+      type="number"
+      inputmode="numeric"
+      step="1"
+      id="cardioMinutes">
+
+
+    <label for="cardioType">
+      Cardio Type
+    </label>
+
+    <input
+      type="text"
+      id="cardioType"
+      placeholder="Example: Incline treadmill">
+
+
+    <label for="steps">
+      Steps
+    </label>
+
+    <input
+      type="number"
+      inputmode="numeric"
+      step="1"
+      id="steps">
+
+
+    <label for="sleep">
+      Sleep Hours
+    </label>
+
+    <input
+      type="number"
+      inputmode="decimal"
+      step="0.1"
+      id="sleep">
+
+
+    <button
+      class="primary"
+      id="saveCheckInButton"
+      onclick="saveDailyCheckIn()">
+      Save Check-In
+    </button>
+
+
+    <button
+      class="secondary"
+      onclick="hideCheckInForm()">
+      Cancel
+    </button>
+
+
+    <div
+      class="status"
+      id="checkInStatus">
+    </div>
+
+  </div>
+
+
+
+  <!-- TODAY'S MEALS -->
+
+  <div class="card">
+
+    <h2>Today's Meals</h2>
+
+    <div id="mealList">
+      Loading...
+    </div>
+
+    <button
+      class="secondary"
+      onclick="loadToday()">
+      Refresh
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+  /*
+  ============================================================
+  GOOGLE APPS SCRIPT URL
+  ============================================================
+  */
+
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbzmtoF1u1ur7K2lM5QtW9ETV72DGEXOv6QhFNAjKnfOPVRF9JyoPPHaHLza_At9gOtR/exec";
+
+
+
+  /*
+  ============================================================
+  DATE
+  ============================================================
+  */
+
+  function getTodayString() {
+
+    const now = new Date();
+
+    const year =
+      now.getFullYear();
+
+    const month =
+      String(
+        now.getMonth() + 1
+      ).padStart(
+        2,
+        "0"
+      );
+
+    const day =
+      String(
+        now.getDate()
+      ).padStart(
+        2,
+        "0"
+      );
+
+    return `${year}-${month}-${day}`;
+  }
+
+
+
+  function showDate() {
+
+    const now =
+      new Date();
+
+    document
+      .getElementById("todayDate")
+      .textContent =
         now.toLocaleDateString(
           "en-US",
           {
@@ -415,405 +906,1090 @@
             year: "numeric"
           }
         );
+  }
+
+
+
+  /*
+  ============================================================
+  FORM DISPLAY
+  ============================================================
+  */
+
+  function showMealForm() {
+
+    document
+      .getElementById("mealFormCard")
+      .classList
+      .remove("hidden");
+
+    document
+      .getElementById("checkInCard")
+      .classList
+      .add("hidden");
+
+    setTimeout(
+      function() {
+
+        document
+          .getElementById("mealDescription")
+          .focus();
+
+      },
+      100
+    );
+  }
+
+
+
+  function hideMealForm() {
+
+    document
+      .getElementById("mealFormCard")
+      .classList
+      .add("hidden");
+  }
+
+
+
+  function showCheckInForm() {
+
+    document
+      .getElementById("checkInCard")
+      .classList
+      .remove("hidden");
+
+    document
+      .getElementById("mealFormCard")
+      .classList
+      .add("hidden");
+  }
+
+
+
+  function hideCheckInForm() {
+
+    document
+      .getElementById("checkInCard")
+      .classList
+      .add("hidden");
+  }
+
+
+
+  /*
+  ============================================================
+  POST TO APPS SCRIPT
+  ============================================================
+  */
+
+  async function postData(data) {
+
+    const response =
+      await fetch(
+        SCRIPT_URL,
+        {
+          method: "POST",
+
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Could not connect to the meal tracker."
+      );
     }
 
 
-    function showMealForm() {
+    return await response.json();
+  }
+
+
+
+  /*
+  ============================================================
+  AI MACRO ESTIMATE
+  ============================================================
+  */
+
+  async function estimateMealWithAI() {
+
+    const description =
       document
-        .getElementById("mealFormCard")
-        .classList.remove("hidden");
+        .getElementById(
+          "mealDescription"
+        )
+        .value
+        .trim();
 
+
+    const status =
       document
-        .getElementById("checkInCard")
-        .classList.add("hidden");
-    }
-
-
-    function hideMealForm() {
-      document
-        .getElementById("mealFormCard")
-        .classList.add("hidden");
-    }
-
-
-    function showCheckInForm() {
-      document
-        .getElementById("checkInCard")
-        .classList.remove("hidden");
-
-      document
-        .getElementById("mealFormCard")
-        .classList.add("hidden");
-    }
-
-
-    function hideCheckInForm() {
-      document
-        .getElementById("checkInCard")
-        .classList.add("hidden");
-    }
-
-
-    async function postData(data) {
-      const response =
-        await fetch(
-          SCRIPT_URL,
-          {
-            method: "POST",
-            body: JSON.stringify(data)
-          }
+        .getElementById(
+          "aiStatus"
         );
 
-      return await response.json();
+
+    const button =
+      document
+        .getElementById(
+          "aiButton"
+        );
+
+
+    if (!description) {
+
+      status.className =
+        "status error";
+
+      status.textContent =
+        "Enter a description of the meal first.";
+
+      document
+        .getElementById(
+          "mealDescription"
+        )
+        .focus();
+
+      return;
     }
 
 
-    async function logMeal() {
-      const status =
-        document.getElementById("mealStatus");
+    status.className =
+      "status info";
 
-      status.className = "status";
-      status.textContent = "Saving...";
+    status.textContent =
+      "Estimating macros...";
 
-      try {
 
-        const data = {
-          action: "addMeal",
-          date: getTodayString(),
+    button.disabled =
+      true;
 
-          meal:
-            document.getElementById("mealType").value,
+    button.textContent =
+      "Estimating...";
+
+
+    try {
+
+      const result =
+        await postData({
+          action:
+            "estimateMeal",
 
           description:
-            document.getElementById("mealDescription").value,
-
-          protein:
-            document.getElementById("protein").value,
-
-          carbs:
-            document.getElementById("carbs").value,
-
-          fat:
-            document.getElementById("fat").value,
-
-          fiber:
-            document.getElementById("fiber").value,
-
-          sodium:
-            document.getElementById("sodium").value,
-
-          calories:
-            document.getElementById("calories").value
-        };
+            description
+        });
 
 
-        const result =
-          await postData(data);
+      if (!result.success) {
 
-
-        if (!result.success) {
-          throw new Error(
-            result.message ||
-            "Meal could not be saved."
-          );
-        }
-
-
-        status.className =
-          "status success";
-
-        status.textContent =
-          "Meal saved successfully.";
-
-
-        clearMealForm();
-
-        await loadToday();
-
-
-      } catch (error) {
-
-        status.className =
-          "status error";
-
-        status.textContent =
-          error.message;
-
+        throw new Error(
+          result.message ||
+          "Could not estimate this meal."
+        );
       }
-    }
 
 
-    function clearMealForm() {
-      document.getElementById("mealDescription").value = "";
-      document.getElementById("protein").value = "";
-      document.getElementById("carbs").value = "";
-      document.getElementById("fat").value = "";
-      document.getElementById("fiber").value = "";
-      document.getElementById("sodium").value = "";
-      document.getElementById("calories").value = "";
-    }
+      document
+        .getElementById("protein")
+        .value =
+          result.protein ?? "";
 
 
-    async function saveDailyCheckIn() {
-      const status =
-        document.getElementById("checkInStatus");
-
-      status.className = "status";
-      status.textContent = "Saving...";
+      document
+        .getElementById("carbs")
+        .value =
+          result.carbs ?? "";
 
 
-      try {
-
-        const data = {
-          action: "saveDailyCheckIn",
-          date: getTodayString(),
-
-          weight:
-            document.getElementById("weight").value,
-
-          waist:
-            document.getElementById("waist").value,
-
-          resistanceMinutes:
-            document.getElementById("resistanceMinutes").value,
-
-          muscleGroups:
-            document.getElementById("muscleGroups").value,
-
-          cardioMinutes:
-            document.getElementById("cardioMinutes").value,
-
-          cardioType:
-            document.getElementById("cardioType").value,
-
-          steps:
-            document.getElementById("steps").value,
-
-          sleep:
-            document.getElementById("sleep").value
-        };
+      document
+        .getElementById("fat")
+        .value =
+          result.fat ?? "";
 
 
-        const result =
-          await postData(data);
+      document
+        .getElementById("fiber")
+        .value =
+          result.fiber ?? "";
 
 
-        if (!result.success) {
-          throw new Error(
-            result.message ||
-            "Check-in could not be saved."
-          );
-        }
+      document
+        .getElementById("sodium")
+        .value =
+          result.sodium ?? "";
 
 
-        status.className =
-          "status success";
+      document
+        .getElementById("calories")
+        .value =
+          result.calories ?? "";
+
+
+      status.className =
+        "status success";
+
+
+      if (result.summary) {
 
         status.textContent =
-          "Daily check-in saved.";
+          "AI estimate: " +
+          result.summary;
 
-
-        await loadToday();
-
-
-      } catch (error) {
-
-        status.className =
-          "status error";
+      } else {
 
         status.textContent =
-          error.message;
-
+          "Macros estimated. Review the numbers before saving.";
       }
+
+
+    } catch (error) {
+
+      status.className =
+        "status error";
+
+      status.textContent =
+        error.message;
+
+    } finally {
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "✨ Estimate Macros with AI";
     }
+  }
 
 
-    async function loadToday() {
 
-      try {
+  /*
+  ============================================================
+  SAVE MEAL
+  ============================================================
+  */
 
-        const result =
-          await postData({
-            action: "getToday",
-            date: getTodayString()
-          });
+  async function logMeal() {
 
-
-        if (!result.success) {
-          throw new Error(
-            result.message ||
-            "Could not load today's data."
-          );
-        }
+    const status =
+      document
+        .getElementById(
+          "mealStatus"
+        );
 
 
-        updateTotals(result.daily);
+    const button =
+      document
+        .getElementById(
+          "saveMealButton"
+        );
 
-        updateCheckInFields(result.daily);
 
-        updateMeals(result.meals);
+    status.className =
+      "status info";
+
+    status.textContent =
+      "Saving meal...";
 
 
-      } catch (error) {
+    button.disabled =
+      true;
 
-        document.getElementById("mealList").innerHTML =
-          `<div style="color:#ff9b98;">
-            ${error.message}
+
+    try {
+
+      const data = {
+
+        action:
+          "addMeal",
+
+        date:
+          getTodayString(),
+
+        meal:
+          document
+            .getElementById(
+              "mealType"
+            )
+            .value,
+
+        description:
+          document
+            .getElementById(
+              "mealDescription"
+            )
+            .value,
+
+        protein:
+          document
+            .getElementById(
+              "protein"
+            )
+            .value,
+
+        carbs:
+          document
+            .getElementById(
+              "carbs"
+            )
+            .value,
+
+        fat:
+          document
+            .getElementById(
+              "fat"
+            )
+            .value,
+
+        fiber:
+          document
+            .getElementById(
+              "fiber"
+            )
+            .value,
+
+        sodium:
+          document
+            .getElementById(
+              "sodium"
+            )
+            .value,
+
+        calories:
+          document
+            .getElementById(
+              "calories"
+            )
+            .value
+      };
+
+
+      const result =
+        await postData(data);
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Meal could not be saved."
+        );
+      }
+
+
+      status.className =
+        "status success";
+
+      status.textContent =
+        "Meal saved successfully.";
+
+
+      clearMealForm();
+
+
+      await loadToday();
+
+
+      setTimeout(
+        function() {
+
+          hideMealForm();
+
+        },
+        700
+      );
+
+
+    } catch (error) {
+
+      status.className =
+        "status error";
+
+      status.textContent =
+        error.message;
+
+    } finally {
+
+      button.disabled =
+        false;
+    }
+  }
+
+
+
+  function clearMealForm() {
+
+    document
+      .getElementById(
+        "mealDescription"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "protein"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "carbs"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "fat"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "fiber"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "sodium"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "calories"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "aiStatus"
+      )
+      .className =
+        "status";
+
+
+    document
+      .getElementById(
+        "aiStatus"
+      )
+      .textContent =
+        "";
+  }
+
+
+
+  /*
+  ============================================================
+  DAILY CHECK-IN
+  ============================================================
+  */
+
+  async function saveDailyCheckIn() {
+
+    const status =
+      document
+        .getElementById(
+          "checkInStatus"
+        );
+
+
+    const button =
+      document
+        .getElementById(
+          "saveCheckInButton"
+        );
+
+
+    status.className =
+      "status info";
+
+    status.textContent =
+      "Saving check-in...";
+
+
+    button.disabled =
+      true;
+
+
+    try {
+
+      const data = {
+
+        action:
+          "saveDailyCheckIn",
+
+        date:
+          getTodayString(),
+
+        weight:
+          document
+            .getElementById(
+              "weight"
+            )
+            .value,
+
+        waist:
+          document
+            .getElementById(
+              "waist"
+            )
+            .value,
+
+        resistanceMinutes:
+          document
+            .getElementById(
+              "resistanceMinutes"
+            )
+            .value,
+
+        muscleGroups:
+          document
+            .getElementById(
+              "muscleGroups"
+            )
+            .value,
+
+        cardioMinutes:
+          document
+            .getElementById(
+              "cardioMinutes"
+            )
+            .value,
+
+        cardioType:
+          document
+            .getElementById(
+              "cardioType"
+            )
+            .value,
+
+        steps:
+          document
+            .getElementById(
+              "steps"
+            )
+            .value,
+
+        sleep:
+          document
+            .getElementById(
+              "sleep"
+            )
+            .value
+      };
+
+
+      const result =
+        await postData(data);
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Check-in could not be saved."
+        );
+      }
+
+
+      status.className =
+        "status success";
+
+      status.textContent =
+        "Daily check-in saved.";
+
+
+      await loadToday();
+
+
+    } catch (error) {
+
+      status.className =
+        "status error";
+
+      status.textContent =
+        error.message;
+
+    } finally {
+
+      button.disabled =
+        false;
+    }
+  }
+
+
+
+  /*
+  ============================================================
+  LOAD TODAY
+  ============================================================
+  */
+
+  async function loadToday() {
+
+    try {
+
+      const result =
+        await postData({
+
+          action:
+            "getToday",
+
+          date:
+            getTodayString()
+        });
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Could not load today's information."
+        );
+      }
+
+
+      updateTotals(
+        result.daily
+      );
+
+
+      updateCheckInFields(
+        result.daily
+      );
+
+
+      updateMeals(
+        result.meals
+      );
+
+
+    } catch (error) {
+
+      document
+        .getElementById(
+          "mealList"
+        )
+        .innerHTML =
+          `<div style="color:#ffaaa6;">
+            ${escapeHTML(error.message)}
           </div>`;
+    }
+  }
 
-      }
+
+
+  /*
+  ============================================================
+  TOTALS
+  ============================================================
+  */
+
+  function updateTotals(daily) {
+
+    const calories =
+      daily?.calories || 0;
+
+    const protein =
+      daily?.protein || 0;
+
+    const carbs =
+      daily?.carbs || 0;
+
+    const fat =
+      daily?.fat || 0;
+
+    const fiber =
+      daily?.fiber || 0;
+
+    const sodium =
+      daily?.sodium || 0;
+
+
+    document
+      .getElementById(
+        "totalCalories"
+      )
+      .textContent =
+        calories;
+
+
+    document
+      .getElementById(
+        "totalProtein"
+      )
+      .textContent =
+        protein + "g";
+
+
+    document
+      .getElementById(
+        "totalCarbs"
+      )
+      .textContent =
+        carbs + "g";
+
+
+    document
+      .getElementById(
+        "totalFat"
+      )
+      .textContent =
+        fat + "g";
+
+
+    document
+      .getElementById(
+        "totalFiber"
+      )
+      .textContent =
+        fiber + "g";
+
+
+    document
+      .getElementById(
+        "totalSodium"
+      )
+      .textContent =
+        sodium + "mg";
+  }
+
+
+
+  /*
+  ============================================================
+  DAILY CHECK-IN VALUES
+  ============================================================
+  */
+
+  function updateCheckInFields(daily) {
+
+    if (!daily) {
+      return;
     }
 
 
-    function updateTotals(daily) {
+    document
+      .getElementById(
+        "weight"
+      )
+      .value =
+        daily.weight ?? "";
 
-      if (!daily) {
+
+    document
+      .getElementById(
+        "waist"
+      )
+      .value =
+        daily.waist ?? "";
+
+
+    document
+      .getElementById(
+        "resistanceMinutes"
+      )
+      .value =
+        daily.resistanceMinutes ?? "";
+
+
+    document
+      .getElementById(
+        "muscleGroups"
+      )
+      .value =
+        daily.muscleGroups ?? "";
+
+
+    document
+      .getElementById(
+        "cardioMinutes"
+      )
+      .value =
+        daily.cardioMinutes ?? "";
+
+
+    document
+      .getElementById(
+        "cardioType"
+      )
+      .value =
+        daily.cardioType ?? "";
+
+
+    document
+      .getElementById(
+        "steps"
+      )
+      .value =
+        daily.steps ?? "";
+
+
+    document
+      .getElementById(
+        "sleep"
+      )
+      .value =
+        daily.sleep ?? "";
+  }
+
+
+
+  /*
+  ============================================================
+  DISPLAY MEALS
+  ============================================================
+  */
+
+  function updateMeals(meals) {
+
+    const container =
+      document
+        .getElementById(
+          "mealList"
+        );
+
+
+    if (
+      !meals ||
+      meals.length === 0
+    ) {
+
+      container.innerHTML =
+        `<div style="color:#b8b8b8;">
+          No meals logged today.
+        </div>`;
+
+      return;
+    }
+
+
+    container.innerHTML =
+      meals
+        .map(
+          function(meal) {
+
+            return `
+              <div class="meal-item">
+
+                <div class="meal-name">
+
+                  ${escapeHTML(
+                    meal.meal ||
+                    "Meal"
+                  )}
+
+                  <span class="meal-time">
+
+                    ${escapeHTML(
+                      formatMealTime(
+                        meal.time
+                      )
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <div class="meal-description">
+
+                  ${escapeHTML(
+                    meal.description ||
+                    ""
+                  )}
+
+                </div>
+
+
+                <div class="meal-macros">
+
+                  ${meal.calories || 0}
+                  cal
+
+                  &nbsp; | &nbsp;
+
+                  ${meal.protein || 0}P
+
+                  &nbsp; | &nbsp;
+
+                  ${meal.carbs || 0}C
+
+                  &nbsp; | &nbsp;
+
+                  ${meal.fat || 0}F
+
+                </div>
+
+              </div>
+            `;
+          }
+        )
+        .join("");
+  }
+
+
+
+  function formatMealTime(value) {
+
+    if (!value) {
+      return "";
+    }
+
+    if (
+      typeof value === "string"
+    ) {
+      return value;
+    }
+
+    return String(value);
+  }
+
+
+
+  /*
+  ============================================================
+  ENTER / RETURN MOVES TO NEXT FIELD
+  ============================================================
+  */
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key !== "Enter"
+      ) {
         return;
       }
 
-      document.getElementById("totalCalories").textContent =
-        daily.calories || 0;
 
-      document.getElementById("totalProtein").textContent =
-        `${daily.protein || 0}g`;
-
-      document.getElementById("totalCarbs").textContent =
-        `${daily.carbs || 0}g`;
-
-      document.getElementById("totalFat").textContent =
-        `${daily.fat || 0}g`;
-
-      document.getElementById("totalFiber").textContent =
-        `${daily.fiber || 0}g`;
-
-      document.getElementById("totalSodium").textContent =
-        `${daily.sodium || 0}mg`;
-    }
+      const active =
+        document.activeElement;
 
 
-    function updateCheckInFields(daily) {
+      /*
+      Keep Return working normally
+      inside the meal description box.
+      */
 
-      if (!daily) {
+      if (
+        active.tagName ===
+        "TEXTAREA"
+      ) {
         return;
       }
 
-      document.getElementById("weight").value =
-        daily.weight || "";
 
-      document.getElementById("waist").value =
-        daily.waist || "";
+      const visibleFields =
+        Array
+          .from(
+            document.querySelectorAll(
+              `
+              input:not([disabled]),
+              select:not([disabled])
+              `
+            )
+          )
+          .filter(
+            function(element) {
 
-      document.getElementById("resistanceMinutes").value =
-        daily.resistanceMinutes || "";
-
-      document.getElementById("muscleGroups").value =
-        daily.muscleGroups || "";
-
-      document.getElementById("cardioMinutes").value =
-        daily.cardioMinutes || "";
-
-      document.getElementById("cardioType").value =
-        daily.cardioType || "";
-
-      document.getElementById("steps").value =
-        daily.steps || "";
-
-      document.getElementById("sleep").value =
-        daily.sleep || "";
-    }
+              return (
+                element.offsetParent !==
+                null
+              );
+            }
+          );
 
 
-    function updateMeals(meals) {
-
-      const container =
-        document.getElementById("mealList");
+      const index =
+        visibleFields.indexOf(
+          active
+        );
 
 
       if (
-        !meals ||
-        meals.length === 0
+        index === -1
       ) {
-        container.innerHTML =
-          `<div style="color:#b8b8b8;">
-            No meals logged today.
-          </div>`;
-
         return;
       }
 
 
-      container.innerHTML =
-        meals.map(
-          meal => `
-            <div class="meal-item">
+      const next =
+        visibleFields[
+          index + 1
+        ];
 
-              <div class="meal-name">
-                ${escapeHTML(meal.meal || "Meal")}
-              </div>
 
-              <div class="meal-description">
-                ${escapeHTML(meal.description || "")}
-              </div>
+      if (next) {
 
-              <div class="meal-macros">
-                ${meal.calories || 0} cal
-                &nbsp;|&nbsp;
-                ${meal.protein || 0}P
-                &nbsp;|&nbsp;
-                ${meal.carbs || 0}C
-                &nbsp;|&nbsp;
-                ${meal.fat || 0}F
-              </div>
+        event.preventDefault();
 
-            </div>
-          `
-        ).join("");
+        next.focus();
+      }
     }
+  );
 
 
-    function escapeHTML(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
 
-document.addEventListener("keydown", function(event) {
-  if (event.key !== "Enter") return;
+  /*
+  ============================================================
+  HTML SAFETY
+  ============================================================
+  */
 
-  const active = document.activeElement;
+  function escapeHTML(value) {
 
-  // Let Enter work normally inside the description box
-  if (active.tagName === "TEXTAREA") {
-    return;
-  }
-
-  const focusable = Array.from(
-    document.querySelectorAll(
-      'input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])'
+    return String(
+      value ?? ""
     )
-  ).filter(el => {
-    return el.offsetParent !== null;
-  });
-
-  const currentIndex = focusable.indexOf(active);
-
-  if (currentIndex === -1) return;
-
-  event.preventDefault();
-
-  const next = focusable[currentIndex + 1];
-
-  if (next) {
-    next.focus();
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
   }
-});
-    showDate();
-    loadToday();
-  </script>
+
+
+
+  /*
+  ============================================================
+  START APP
+  ============================================================
+  */
+
+  showDate();
+
+  loadToday();
+
+</script>
 
 </body>
 </html>
-```
