@@ -1,0 +1,790 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meal & Macro Tracker</title>
+
+  <style>
+    :root {
+      --bg: #151515;
+      --panel: #242424;
+      --panel-2: #303030;
+      --orange: #f58220;
+      --text: #ffffff;
+      --muted: #b8b8b8;
+      --danger: #d9534f;
+      --success: #4caf50;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+
+    .date {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .macro-box {
+      background: var(--panel-2);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .macro-box .label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .macro-box .value {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--orange);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .primary {
+      background: var(--orange);
+      color: #111;
+    }
+
+    .secondary {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid #4b4b4b;
+    }
+
+    .danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #1c1c1c;
+      color: white;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .meal-item {
+      background: var(--panel-2);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .meal-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .meal-description {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .meal-macros {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .status.success {
+      display: block;
+      background: rgba(76, 175, 80, .18);
+      color: #8dd98f;
+    }
+
+    .status.error {
+      display: block;
+      background: rgba(217, 83, 79, .18);
+      color: #ff9b98;
+    }
+
+    @media (min-width: 600px) {
+      .macro-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <h1>Meal & Macro Tracker</h1>
+    <div class="date" id="todayDate"></div>
+
+    <div class="card">
+      <h2>Today's Totals</h2>
+
+      <div class="macro-grid">
+        <div class="macro-box">
+          <span class="label">Calories</span>
+          <span class="value" id="totalCalories">0</span>
+        </div>
+
+        <div class="macro-box">
+          <span class="label">Protein</span>
+          <span class="value" id="totalProtein">0g</span>
+        </div>
+
+        <div class="macro-box">
+          <span class="label">Carbs</span>
+          <span class="value" id="totalCarbs">0g</span>
+        </div>
+
+        <div class="macro-box">
+          <span class="label">Fat</span>
+          <span class="value" id="totalFat">0g</span>
+        </div>
+
+        <div class="macro-box">
+          <span class="label">Fiber</span>
+          <span class="value" id="totalFiber">0g</span>
+        </div>
+
+        <div class="macro-box">
+          <span class="label">Sodium</span>
+          <span class="value" id="totalSodium">0mg</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <button class="primary" onclick="showMealForm()">
+        + Log Meal
+      </button>
+
+      <button class="secondary" onclick="showCheckInForm()">
+        Daily Check-In
+      </button>
+    </div>
+
+
+    <div class="card hidden" id="mealFormCard">
+      <h2>Log Meal</h2>
+
+      <label>Meal</label>
+      <select id="mealType">
+        <option>Breakfast</option>
+        <option>Lunch</option>
+        <option>Dinner</option>
+        <option>Snack</option>
+        <option>Other</option>
+      </select>
+
+      <label>Description</label>
+      <textarea
+        id="mealDescription"
+        placeholder="Example: Chicken breast, rice and corn"
+      ></textarea>
+
+      <div class="row">
+        <div>
+          <label>Protein (g)</label>
+          <input type="number" step="0.1" id="protein" />
+        </div>
+
+        <div>
+          <label>Carbs (g)</label>
+          <input type="number" step="0.1" id="carbs" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Fat (g)</label>
+          <input type="number" step="0.1" id="fat" />
+        </div>
+
+        <div>
+          <label>Fiber (g)</label>
+          <input type="number" step="0.1" id="fiber" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Sodium (mg)</label>
+          <input type="number" step="1" id="sodium" />
+        </div>
+
+        <div>
+          <label>Calories</label>
+          <input type="number" step="1" id="calories" />
+        </div>
+      </div>
+
+      <button class="primary" onclick="logMeal()">
+        Save Meal
+      </button>
+
+      <button class="secondary" onclick="hideMealForm()">
+        Cancel
+      </button>
+
+      <div class="status" id="mealStatus"></div>
+    </div>
+
+
+    <div class="card hidden" id="checkInCard">
+      <h2>Daily Check-In</h2>
+
+      <div class="row">
+        <div>
+          <label>Weight</label>
+          <input type="number" step="0.1" id="weight" />
+        </div>
+
+        <div>
+          <label>Waist</label>
+          <input type="number" step="0.1" id="waist" />
+        </div>
+      </div>
+
+      <label>Resistance Training Minutes</label>
+      <input type="number" step="1" id="resistanceMinutes" />
+
+      <label>Muscle Groups</label>
+      <input
+        type="text"
+        id="muscleGroups"
+        placeholder="Example: Chest, shoulders, triceps"
+      />
+
+      <label>Cardio Minutes</label>
+      <input type="number" step="1" id="cardioMinutes" />
+
+      <label>Cardio Type</label>
+      <input
+        type="text"
+        id="cardioType"
+        placeholder="Example: Incline treadmill"
+      />
+
+      <label>Steps</label>
+      <input type="number" step="1" id="steps" />
+
+      <label>Sleep Hours</label>
+      <input type="number" step="0.1" id="sleep" />
+
+      <button class="primary" onclick="saveDailyCheckIn()">
+        Save Check-In
+      </button>
+
+      <button class="secondary" onclick="hideCheckInForm()">
+        Cancel
+      </button>
+
+      <div class="status" id="checkInStatus"></div>
+    </div>
+
+
+    <div class="card">
+      <h2>Today's Meals</h2>
+
+      <div id="mealList">
+        Loading...
+      </div>
+
+      <button class="secondary" onclick="loadToday()">
+        Refresh
+      </button>
+    </div>
+
+  </div>
+
+
+  <script>
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbzmtoF1u1ur7K2lM5QtW9ETV72DGEXOv6QhFNAjKnfOPVRF9JyoPPHaHLza_At9gOtR/exec";
+
+
+    function getTodayString() {
+      const now = new Date();
+
+      const year = now.getFullYear();
+      const month =
+        String(now.getMonth() + 1).padStart(2, "0");
+      const day =
+        String(now.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+
+    function showDate() {
+      const now = new Date();
+
+      document.getElementById("todayDate").textContent =
+        now.toLocaleDateString(
+          "en-US",
+          {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          }
+        );
+    }
+
+
+    function showMealForm() {
+      document
+        .getElementById("mealFormCard")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("checkInCard")
+        .classList.add("hidden");
+    }
+
+
+    function hideMealForm() {
+      document
+        .getElementById("mealFormCard")
+        .classList.add("hidden");
+    }
+
+
+    function showCheckInForm() {
+      document
+        .getElementById("checkInCard")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("mealFormCard")
+        .classList.add("hidden");
+    }
+
+
+    function hideCheckInForm() {
+      document
+        .getElementById("checkInCard")
+        .classList.add("hidden");
+    }
+
+
+    async function postData(data) {
+      const response =
+        await fetch(
+          SCRIPT_URL,
+          {
+            method: "POST",
+            body: JSON.stringify(data)
+          }
+        );
+
+      return await response.json();
+    }
+
+
+    async function logMeal() {
+      const status =
+        document.getElementById("mealStatus");
+
+      status.className = "status";
+      status.textContent = "Saving...";
+
+      try {
+
+        const data = {
+          action: "addMeal",
+          date: getTodayString(),
+
+          meal:
+            document.getElementById("mealType").value,
+
+          description:
+            document.getElementById("mealDescription").value,
+
+          protein:
+            document.getElementById("protein").value,
+
+          carbs:
+            document.getElementById("carbs").value,
+
+          fat:
+            document.getElementById("fat").value,
+
+          fiber:
+            document.getElementById("fiber").value,
+
+          sodium:
+            document.getElementById("sodium").value,
+
+          calories:
+            document.getElementById("calories").value
+        };
+
+
+        const result =
+          await postData(data);
+
+
+        if (!result.success) {
+          throw new Error(
+            result.message ||
+            "Meal could not be saved."
+          );
+        }
+
+
+        status.className =
+          "status success";
+
+        status.textContent =
+          "Meal saved successfully.";
+
+
+        clearMealForm();
+
+        await loadToday();
+
+
+      } catch (error) {
+
+        status.className =
+          "status error";
+
+        status.textContent =
+          error.message;
+
+      }
+    }
+
+
+    function clearMealForm() {
+      document.getElementById("mealDescription").value = "";
+      document.getElementById("protein").value = "";
+      document.getElementById("carbs").value = "";
+      document.getElementById("fat").value = "";
+      document.getElementById("fiber").value = "";
+      document.getElementById("sodium").value = "";
+      document.getElementById("calories").value = "";
+    }
+
+
+    async function saveDailyCheckIn() {
+      const status =
+        document.getElementById("checkInStatus");
+
+      status.className = "status";
+      status.textContent = "Saving...";
+
+
+      try {
+
+        const data = {
+          action: "saveDailyCheckIn",
+          date: getTodayString(),
+
+          weight:
+            document.getElementById("weight").value,
+
+          waist:
+            document.getElementById("waist").value,
+
+          resistanceMinutes:
+            document.getElementById("resistanceMinutes").value,
+
+          muscleGroups:
+            document.getElementById("muscleGroups").value,
+
+          cardioMinutes:
+            document.getElementById("cardioMinutes").value,
+
+          cardioType:
+            document.getElementById("cardioType").value,
+
+          steps:
+            document.getElementById("steps").value,
+
+          sleep:
+            document.getElementById("sleep").value
+        };
+
+
+        const result =
+          await postData(data);
+
+
+        if (!result.success) {
+          throw new Error(
+            result.message ||
+            "Check-in could not be saved."
+          );
+        }
+
+
+        status.className =
+          "status success";
+
+        status.textContent =
+          "Daily check-in saved.";
+
+
+        await loadToday();
+
+
+      } catch (error) {
+
+        status.className =
+          "status error";
+
+        status.textContent =
+          error.message;
+
+      }
+    }
+
+
+    async function loadToday() {
+
+      try {
+
+        const result =
+          await postData({
+            action: "getToday",
+            date: getTodayString()
+          });
+
+
+        if (!result.success) {
+          throw new Error(
+            result.message ||
+            "Could not load today's data."
+          );
+        }
+
+
+        updateTotals(result.daily);
+
+        updateCheckInFields(result.daily);
+
+        updateMeals(result.meals);
+
+
+      } catch (error) {
+
+        document.getElementById("mealList").innerHTML =
+          `<div style="color:#ff9b98;">
+            ${error.message}
+          </div>`;
+
+      }
+    }
+
+
+    function updateTotals(daily) {
+
+      if (!daily) {
+        return;
+      }
+
+      document.getElementById("totalCalories").textContent =
+        daily.calories || 0;
+
+      document.getElementById("totalProtein").textContent =
+        `${daily.protein || 0}g`;
+
+      document.getElementById("totalCarbs").textContent =
+        `${daily.carbs || 0}g`;
+
+      document.getElementById("totalFat").textContent =
+        `${daily.fat || 0}g`;
+
+      document.getElementById("totalFiber").textContent =
+        `${daily.fiber || 0}g`;
+
+      document.getElementById("totalSodium").textContent =
+        `${daily.sodium || 0}mg`;
+    }
+
+
+    function updateCheckInFields(daily) {
+
+      if (!daily) {
+        return;
+      }
+
+      document.getElementById("weight").value =
+        daily.weight || "";
+
+      document.getElementById("waist").value =
+        daily.waist || "";
+
+      document.getElementById("resistanceMinutes").value =
+        daily.resistanceMinutes || "";
+
+      document.getElementById("muscleGroups").value =
+        daily.muscleGroups || "";
+
+      document.getElementById("cardioMinutes").value =
+        daily.cardioMinutes || "";
+
+      document.getElementById("cardioType").value =
+        daily.cardioType || "";
+
+      document.getElementById("steps").value =
+        daily.steps || "";
+
+      document.getElementById("sleep").value =
+        daily.sleep || "";
+    }
+
+
+    function updateMeals(meals) {
+
+      const container =
+        document.getElementById("mealList");
+
+
+      if (
+        !meals ||
+        meals.length === 0
+      ) {
+        container.innerHTML =
+          `<div style="color:#b8b8b8;">
+            No meals logged today.
+          </div>`;
+
+        return;
+      }
+
+
+      container.innerHTML =
+        meals.map(
+          meal => `
+            <div class="meal-item">
+
+              <div class="meal-name">
+                ${escapeHTML(meal.meal || "Meal")}
+              </div>
+
+              <div class="meal-description">
+                ${escapeHTML(meal.description || "")}
+              </div>
+
+              <div class="meal-macros">
+                ${meal.calories || 0} cal
+                &nbsp;|&nbsp;
+                ${meal.protein || 0}P
+                &nbsp;|&nbsp;
+                ${meal.carbs || 0}C
+                &nbsp;|&nbsp;
+                ${meal.fat || 0}F
+              </div>
+
+            </div>
+          `
+        ).join("");
+    }
+
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    showDate();
+    loadToday();
+  </script>
+
+</body>
+</html>
+```
