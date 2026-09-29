@@ -33,129 +33,86 @@
     body {
       margin: 0;
       padding: 0;
-
       background: var(--bg);
       color: var(--text);
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
     .app {
       width: 100%;
       max-width: 700px;
-
       margin: 0 auto;
-
-      padding:
-        18px
-        18px
-        calc(30px + env(safe-area-inset-bottom));
+      padding: 18px 18px calc(30px + env(safe-area-inset-bottom));
     }
 
     h1 {
       margin: 4px 0 5px;
-
       font-size: 28px;
     }
 
     h2 {
-      margin:
-        0
-        0
-        14px;
-
+      margin: 0 0 14px;
       font-size: 20px;
     }
 
     .date {
       color: var(--muted);
-
       margin-bottom: 20px;
     }
 
     .card {
       background: var(--panel);
-
       border-radius: 14px;
-
       padding: 16px;
-
       margin-bottom: 16px;
-
-      box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
 
     .macro-grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
     .macro-box {
       background: var(--panel2);
-
       border-radius: 10px;
-
       padding: 12px;
-
       text-align: center;
     }
 
     .macro-label {
       display: block;
-
       color: var(--muted);
-
       font-size: 12px;
-
       margin-bottom: 5px;
     }
 
     .macro-value {
       color: var(--orange);
-
       font-size: 22px;
-
       font-weight: bold;
     }
 
     button {
       width: 100%;
-
       border: none;
-
       border-radius: 10px;
-
       padding: 14px;
-
       margin-top: 10px;
-
       font-size: 16px;
-
       font-weight: bold;
-
       cursor: pointer;
     }
 
     button:disabled {
       opacity: 0.6;
-
       cursor: default;
     }
 
     .primary {
       background: var(--orange);
-
       color: #111;
     }
 
@@ -165,33 +122,15 @@
 
     .secondary {
       background: var(--panel2);
-
       color: var(--text);
-
-      border:
-        1px solid
-        var(--border);
-    }
-
-    .ai-button {
-      background: #3a3a3a;
-
-      color: white;
-
-      border:
-        1px solid
-        var(--orange);
+      border: 1px solid var(--border);
     }
 
     label {
       display: block;
-
       margin-top: 12px;
-
       margin-bottom: 5px;
-
       font-size: 14px;
-
       color: var(--muted);
     }
 
@@ -199,21 +138,12 @@
     textarea,
     select {
       width: 100%;
-
-      border:
-        1px solid
-        #555;
-
+      border: 1px solid #555;
       border-radius: 8px;
-
       padding: 12px;
-
       background: #1c1c1c;
-
       color: white;
-
       font-size: 16px;
-
       outline: none;
     }
 
@@ -225,16 +155,12 @@
 
     textarea {
       min-height: 85px;
-
       resize: vertical;
     }
 
     .row {
       display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
@@ -244,118 +170,69 @@
 
     .status {
       display: none;
-
       margin-top: 12px;
-
       padding: 11px;
-
       border-radius: 8px;
-
       font-size: 14px;
-
       line-height: 1.4;
     }
 
     .status.success {
       display: block;
-
       color: #a9e8aa;
-
-      background:
-        rgba(76, 175, 80, 0.18);
+      background: rgba(76, 175, 80, 0.18);
     }
 
     .status.error {
       display: block;
-
       color: #ffaaa6;
-
-      background:
-        rgba(217, 83, 79, 0.18);
+      background: rgba(217, 83, 79, 0.18);
     }
 
     .status.info {
       display: block;
-
       color: #ffd0a3;
-
-      background:
-        rgba(245, 130, 32, 0.15);
+      background: rgba(245, 130, 32, 0.15);
     }
 
     .meal-item {
       background: var(--panel2);
-
       border-radius: 10px;
-
       padding: 12px;
-
       margin-bottom: 10px;
     }
 
     .meal-name {
       font-size: 16px;
-
       font-weight: bold;
     }
 
     .meal-time {
       float: right;
-
       color: var(--muted);
-
       font-size: 12px;
-
       font-weight: normal;
     }
 
     .meal-description {
       color: var(--muted);
-
       margin-top: 5px;
-
       font-size: 14px;
-
       line-height: 1.4;
     }
 
     .meal-macros {
       margin-top: 9px;
-
       font-size: 14px;
-    }
-
-    .small-text {
-      color: var(--muted);
-
-      font-size: 12px;
-
-      line-height: 1.4;
-
-      margin-top: 8px;
-    }
-
-    .section-divider {
-      border: 0;
-
-      border-top:
-        1px solid
-        #3d3d3d;
-
-      margin:
-        18px
-        0;
     }
 
     @media (min-width: 600px) {
       .macro-grid {
-        grid-template-columns:
-          repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
     }
   </style>
 </head>
-
 
 <body>
 
@@ -363,116 +240,45 @@
 
   <h1>Meal & Macro Tracker</h1>
 
-  <div
-    class="date"
-    id="todayDate">
-  </div>
-
-
-  <!-- TODAY TOTALS -->
+  <div class="date" id="todayDate"></div>
 
   <div class="card">
-
     <h2>Today's Totals</h2>
 
     <div class="macro-grid">
 
       <div class="macro-box">
-
-        <span class="macro-label">
-          Calories
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalCalories">
-          0
-        </span>
-
+        <span class="macro-label">Calories</span>
+        <span class="macro-value" id="totalCalories">0</span>
       </div>
 
-
       <div class="macro-box">
-
-        <span class="macro-label">
-          Protein
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalProtein">
-          0g
-        </span>
-
+        <span class="macro-label">Protein</span>
+        <span class="macro-value" id="totalProtein">0g</span>
       </div>
 
-
       <div class="macro-box">
-
-        <span class="macro-label">
-          Carbs
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalCarbs">
-          0g
-        </span>
-
+        <span class="macro-label">Carbs</span>
+        <span class="macro-value" id="totalCarbs">0g</span>
       </div>
 
-
       <div class="macro-box">
-
-        <span class="macro-label">
-          Fat
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalFat">
-          0g
-        </span>
-
+        <span class="macro-label">Fat</span>
+        <span class="macro-value" id="totalFat">0g</span>
       </div>
 
-
       <div class="macro-box">
-
-        <span class="macro-label">
-          Fiber
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalFiber">
-          0g
-        </span>
-
+        <span class="macro-label">Fiber</span>
+        <span class="macro-value" id="totalFiber">0g</span>
       </div>
 
-
       <div class="macro-box">
-
-        <span class="macro-label">
-          Sodium
-        </span>
-
-        <span
-          class="macro-value"
-          id="totalSodium">
-          0mg
-        </span>
-
+        <span class="macro-label">Sodium</span>
+        <span class="macro-value" id="totalSodium">0mg</span>
       </div>
 
     </div>
-
   </div>
-
-
-
-  <!-- MAIN BUTTONS -->
 
   <div class="card">
 
@@ -490,180 +296,100 @@
 
   </div>
 
-
-
-  <!-- MEAL ENTRY -->
-
   <div
     class="card hidden"
     id="mealFormCard">
 
     <h2>Log Meal</h2>
 
-
-    <label for="mealType">
-      Meal
-    </label>
+    <label for="mealType">Meal</label>
 
     <select id="mealType">
-
-      <option value="Breakfast">
-        Breakfast
-      </option>
-
-      <option value="Lunch">
-        Lunch
-      </option>
-
-      <option value="Dinner">
-        Dinner
-      </option>
-
-      <option value="Snack">
-        Snack
-      </option>
-
-      <option value="Other">
-        Other
-      </option>
-
+      <option value="Breakfast">Breakfast</option>
+      <option value="Lunch">Lunch</option>
+      <option value="Dinner">Dinner</option>
+      <option value="Snack">Snack</option>
+      <option value="Other">Other</option>
     </select>
 
-
-    <label for="mealDescription">
-      Description
-    </label>
+    <label for="mealDescription">Description</label>
 
     <textarea
       id="mealDescription"
       placeholder="Example: 6 oz chicken breast, 1/2 cup rice and 1/2 cup corn">
     </textarea>
 
-
-    <button
-      type="button"
-      class="ai-button"
-      id="aiButton"
-      onclick="estimateMealWithAI()">
-      ✨ Estimate Macros with AI
-    </button>
-
-
-    <div
-      class="status"
-      id="aiStatus">
-    </div>
-
-
-    <hr class="section-divider">
-
-
     <div class="row">
 
       <div>
-
-        <label for="protein">
-          Protein (g)
-        </label>
+        <label for="protein">Protein (g)</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="protein">
-
       </div>
 
-
       <div>
-
-        <label for="carbs">
-          Carbs (g)
-        </label>
+        <label for="carbs">Carbs (g)</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="carbs">
-
       </div>
 
     </div>
 
-
     <div class="row">
 
       <div>
-
-        <label for="fat">
-          Fat (g)
-        </label>
+        <label for="fat">Fat (g)</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="fat">
-
       </div>
 
-
       <div>
-
-        <label for="fiber">
-          Fiber (g)
-        </label>
+        <label for="fiber">Fiber (g)</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="fiber">
-
       </div>
 
     </div>
 
-
     <div class="row">
 
       <div>
-
-        <label for="sodium">
-          Sodium (mg)
-        </label>
+        <label for="sodium">Sodium (mg)</label>
 
         <input
           type="number"
           inputmode="numeric"
           step="1"
           id="sodium">
-
       </div>
 
-
       <div>
-
-        <label for="calories">
-          Calories
-        </label>
+        <label for="calories">Calories</label>
 
         <input
           type="number"
           inputmode="numeric"
           step="1"
           id="calories">
-
       </div>
 
     </div>
-
-
-    <div class="small-text">
-      AI nutrition values are estimates. Review the numbers before saving.
-    </div>
-
 
     <button
       class="primary"
@@ -672,13 +398,11 @@
       Save Meal
     </button>
 
-
     <button
       class="secondary"
       onclick="hideMealForm()">
       Cancel
     </button>
-
 
     <div
       class="status"
@@ -687,50 +411,35 @@
 
   </div>
 
-
-
-  <!-- DAILY CHECK-IN -->
-
   <div
     class="card hidden"
     id="checkInCard">
 
     <h2>Daily Check-In</h2>
 
-
     <div class="row">
 
       <div>
-
-        <label for="weight">
-          Weight
-        </label>
+        <label for="weight">Weight</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="weight">
-
       </div>
 
-
       <div>
-
-        <label for="waist">
-          Waist
-        </label>
+        <label for="waist">Waist</label>
 
         <input
           type="number"
           inputmode="decimal"
           step="0.1"
           id="waist">
-
       </div>
 
     </div>
-
 
     <label for="resistanceMinutes">
       Resistance Training Minutes
@@ -742,7 +451,6 @@
       step="1"
       id="resistanceMinutes">
 
-
     <label for="muscleGroups">
       Muscle Groups
     </label>
@@ -751,7 +459,6 @@
       type="text"
       id="muscleGroups"
       placeholder="Example: Chest, shoulders, triceps">
-
 
     <label for="cardioMinutes">
       Cardio Minutes
@@ -763,7 +470,6 @@
       step="1"
       id="cardioMinutes">
 
-
     <label for="cardioType">
       Cardio Type
     </label>
@@ -772,7 +478,6 @@
       type="text"
       id="cardioType"
       placeholder="Example: Incline treadmill">
-
 
     <label for="steps">
       Steps
@@ -784,7 +489,6 @@
       step="1"
       id="steps">
 
-
     <label for="sleep">
       Sleep Hours
     </label>
@@ -795,7 +499,6 @@
       step="0.1"
       id="sleep">
 
-
     <button
       class="primary"
       id="saveCheckInButton"
@@ -803,13 +506,11 @@
       Save Check-In
     </button>
 
-
     <button
       class="secondary"
       onclick="hideCheckInForm()">
       Cancel
     </button>
-
 
     <div
       class="status"
@@ -817,10 +518,6 @@
     </div>
 
   </div>
-
-
-
-  <!-- TODAY'S MEALS -->
 
   <div class="card">
 
@@ -840,26 +537,11 @@
 
 </div>
 
-
-
 <script>
-
-  /*
-  ============================================================
-  GOOGLE APPS SCRIPT URL
-  ============================================================
-  */
 
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbzmtoF1u1ur7K2lM5QtW9ETV72DGEXOv6QhFNAjKnfOPVRF9JyoPPHaHLza_At9gOtR/exec";
 
-
-
-  /*
-  ============================================================
-  DATE
-  ============================================================
-  */
 
   function getTodayString() {
 
@@ -871,22 +553,15 @@
     const month =
       String(
         now.getMonth() + 1
-      ).padStart(
-        2,
-        "0"
-      );
+      ).padStart(2, "0");
 
     const day =
       String(
         now.getDate()
-      ).padStart(
-        2,
-        "0"
-      );
+      ).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   }
-
 
 
   function showDate() {
@@ -909,13 +584,6 @@
   }
 
 
-
-  /*
-  ============================================================
-  FORM DISPLAY
-  ============================================================
-  */
-
   function showMealForm() {
 
     document
@@ -927,19 +595,7 @@
       .getElementById("checkInCard")
       .classList
       .add("hidden");
-
-    setTimeout(
-      function() {
-
-        document
-          .getElementById("mealDescription")
-          .focus();
-
-      },
-      100
-    );
   }
-
 
 
   function hideMealForm() {
@@ -949,7 +605,6 @@
       .classList
       .add("hidden");
   }
-
 
 
   function showCheckInForm() {
@@ -966,7 +621,6 @@
   }
 
 
-
   function hideCheckInForm() {
 
     document
@@ -976,13 +630,6 @@
   }
 
 
-
-  /*
-  ============================================================
-  POST TO APPS SCRIPT
-  ============================================================
-  */
-
   async function postData(data) {
 
     const response =
@@ -990,12 +637,9 @@
         SCRIPT_URL,
         {
           method: "POST",
-
-          body:
-            JSON.stringify(data)
+          body: JSON.stringify(data)
         }
       );
-
 
     if (!response.ok) {
 
@@ -1004,174 +648,9 @@
       );
     }
 
-
     return await response.json();
   }
 
-
-
-  /*
-  ============================================================
-  AI MACRO ESTIMATE
-  ============================================================
-  */
-
-  async function estimateMealWithAI() {
-
-    const description =
-      document
-        .getElementById(
-          "mealDescription"
-        )
-        .value
-        .trim();
-
-
-    const status =
-      document
-        .getElementById(
-          "aiStatus"
-        );
-
-
-    const button =
-      document
-        .getElementById(
-          "aiButton"
-        );
-
-
-    if (!description) {
-
-      status.className =
-        "status error";
-
-      status.textContent =
-        "Enter a description of the meal first.";
-
-      document
-        .getElementById(
-          "mealDescription"
-        )
-        .focus();
-
-      return;
-    }
-
-
-    status.className =
-      "status info";
-
-    status.textContent =
-      "Estimating macros...";
-
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Estimating...";
-
-
-    try {
-
-      const result =
-        await postData({
-          action:
-            "estimateMeal",
-
-          description:
-            description
-        });
-
-
-      if (!result.success) {
-
-        throw new Error(
-          result.message ||
-          "Could not estimate this meal."
-        );
-      }
-
-
-      document
-        .getElementById("protein")
-        .value =
-          result.protein ?? "";
-
-
-      document
-        .getElementById("carbs")
-        .value =
-          result.carbs ?? "";
-
-
-      document
-        .getElementById("fat")
-        .value =
-          result.fat ?? "";
-
-
-      document
-        .getElementById("fiber")
-        .value =
-          result.fiber ?? "";
-
-
-      document
-        .getElementById("sodium")
-        .value =
-          result.sodium ?? "";
-
-
-      document
-        .getElementById("calories")
-        .value =
-          result.calories ?? "";
-
-
-      status.className =
-        "status success";
-
-
-      if (result.summary) {
-
-        status.textContent =
-          "AI estimate: " +
-          result.summary;
-
-      } else {
-
-        status.textContent =
-          "Macros estimated. Review the numbers before saving.";
-      }
-
-
-    } catch (error) {
-
-      status.className =
-        "status error";
-
-      status.textContent =
-        error.message;
-
-    } finally {
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "✨ Estimate Macros with AI";
-    }
-  }
-
-
-
-  /*
-  ============================================================
-  SAVE MEAL
-  ============================================================
-  */
 
   async function logMeal() {
 
@@ -1181,13 +660,11 @@
           "mealStatus"
         );
 
-
     const button =
       document
         .getElementById(
           "saveMealButton"
         );
-
 
     status.className =
       "status info";
@@ -1195,10 +672,8 @@
     status.textContent =
       "Saving meal...";
 
-
     button.disabled =
       true;
-
 
     try {
 
@@ -1267,10 +742,8 @@
             .value
       };
 
-
       const result =
         await postData(data);
-
 
       if (!result.success) {
 
@@ -1280,29 +753,22 @@
         );
       }
 
-
       status.className =
         "status success";
 
       status.textContent =
         "Meal saved successfully.";
 
-
       clearMealForm();
-
 
       await loadToday();
 
-
       setTimeout(
         function() {
-
           hideMealForm();
-
         },
         700
       );
-
 
     } catch (error) {
 
@@ -1320,7 +786,6 @@
   }
 
 
-
   function clearMealForm() {
 
     document
@@ -1329,13 +794,11 @@
       )
       .value = "";
 
-
     document
       .getElementById(
         "protein"
       )
       .value = "";
-
 
     document
       .getElementById(
@@ -1343,13 +806,11 @@
       )
       .value = "";
 
-
     document
       .getElementById(
         "fat"
       )
       .value = "";
-
 
     document
       .getElementById(
@@ -1357,44 +818,19 @@
       )
       .value = "";
 
-
     document
       .getElementById(
         "sodium"
       )
       .value = "";
 
-
     document
       .getElementById(
         "calories"
       )
       .value = "";
-
-
-    document
-      .getElementById(
-        "aiStatus"
-      )
-      .className =
-        "status";
-
-
-    document
-      .getElementById(
-        "aiStatus"
-      )
-      .textContent =
-        "";
   }
 
-
-
-  /*
-  ============================================================
-  DAILY CHECK-IN
-  ============================================================
-  */
 
   async function saveDailyCheckIn() {
 
@@ -1404,13 +840,11 @@
           "checkInStatus"
         );
 
-
     const button =
       document
         .getElementById(
           "saveCheckInButton"
         );
-
 
     status.className =
       "status info";
@@ -1418,10 +852,8 @@
     status.textContent =
       "Saving check-in...";
 
-
     button.disabled =
       true;
-
 
     try {
 
@@ -1490,10 +922,8 @@
             .value
       };
 
-
       const result =
         await postData(data);
-
 
       if (!result.success) {
 
@@ -1503,16 +933,13 @@
         );
       }
 
-
       status.className =
         "status success";
 
       status.textContent =
         "Daily check-in saved.";
 
-
       await loadToday();
-
 
     } catch (error) {
 
@@ -1530,13 +957,6 @@
   }
 
 
-
-  /*
-  ============================================================
-  LOAD TODAY
-  ============================================================
-  */
-
   async function loadToday() {
 
     try {
@@ -1551,7 +971,6 @@
             getTodayString()
         });
 
-
       if (!result.success) {
 
         throw new Error(
@@ -1560,21 +979,17 @@
         );
       }
 
-
       updateTotals(
         result.daily
       );
-
 
       updateCheckInFields(
         result.daily
       );
 
-
       updateMeals(
         result.meals
       );
-
 
     } catch (error) {
 
@@ -1589,13 +1004,6 @@
     }
   }
 
-
-
-  /*
-  ============================================================
-  TOTALS
-  ============================================================
-  */
 
   function updateTotals(daily) {
 
@@ -1617,14 +1025,12 @@
     const sodium =
       daily?.sodium || 0;
 
-
     document
       .getElementById(
         "totalCalories"
       )
       .textContent =
         calories;
-
 
     document
       .getElementById(
@@ -1633,14 +1039,12 @@
       .textContent =
         protein + "g";
 
-
     document
       .getElementById(
         "totalCarbs"
       )
       .textContent =
         carbs + "g";
-
 
     document
       .getElementById(
@@ -1649,14 +1053,12 @@
       .textContent =
         fat + "g";
 
-
     document
       .getElementById(
         "totalFiber"
       )
       .textContent =
         fiber + "g";
-
 
     document
       .getElementById(
@@ -1667,19 +1069,11 @@
   }
 
 
-
-  /*
-  ============================================================
-  DAILY CHECK-IN VALUES
-  ============================================================
-  */
-
   function updateCheckInFields(daily) {
 
     if (!daily) {
       return;
     }
-
 
     document
       .getElementById(
@@ -1688,14 +1082,12 @@
       .value =
         daily.weight ?? "";
 
-
     document
       .getElementById(
         "waist"
       )
       .value =
         daily.waist ?? "";
-
 
     document
       .getElementById(
@@ -1704,14 +1096,12 @@
       .value =
         daily.resistanceMinutes ?? "";
 
-
     document
       .getElementById(
         "muscleGroups"
       )
       .value =
         daily.muscleGroups ?? "";
-
 
     document
       .getElementById(
@@ -1720,7 +1110,6 @@
       .value =
         daily.cardioMinutes ?? "";
 
-
     document
       .getElementById(
         "cardioType"
@@ -1728,14 +1117,12 @@
       .value =
         daily.cardioType ?? "";
 
-
     document
       .getElementById(
         "steps"
       )
       .value =
         daily.steps ?? "";
-
 
     document
       .getElementById(
@@ -1746,13 +1133,6 @@
   }
 
 
-
-  /*
-  ============================================================
-  DISPLAY MEALS
-  ============================================================
-  */
-
   function updateMeals(meals) {
 
     const container =
@@ -1760,7 +1140,6 @@
         .getElementById(
           "mealList"
         );
-
 
     if (
       !meals ||
@@ -1774,7 +1153,6 @@
 
       return;
     }
-
 
     container.innerHTML =
       meals
@@ -1794,15 +1172,12 @@
                   <span class="meal-time">
 
                     ${escapeHTML(
-                      formatMealTime(
-                        meal.time
-                      )
+                      meal.time || ""
                     )}
 
                   </span>
 
                 </div>
-
 
                 <div class="meal-description">
 
@@ -1812,7 +1187,6 @@
                   )}
 
                 </div>
-
 
                 <div class="meal-macros">
 
@@ -1841,30 +1215,6 @@
   }
 
 
-
-  function formatMealTime(value) {
-
-    if (!value) {
-      return "";
-    }
-
-    if (
-      typeof value === "string"
-    ) {
-      return value;
-    }
-
-    return String(value);
-  }
-
-
-
-  /*
-  ============================================================
-  ENTER / RETURN MOVES TO NEXT FIELD
-  ============================================================
-  */
-
   document.addEventListener(
     "keydown",
     function(event) {
@@ -1875,15 +1225,8 @@
         return;
       }
 
-
       const active =
         document.activeElement;
-
-
-      /*
-      Keep Return working normally
-      inside the meal description box.
-      */
 
       if (
         active.tagName ===
@@ -1891,7 +1234,6 @@
       ) {
         return;
       }
-
 
       const visibleFields =
         Array
@@ -1905,7 +1247,6 @@
           )
           .filter(
             function(element) {
-
               return (
                 element.offsetParent !==
                 null
@@ -1913,12 +1254,10 @@
             }
           );
 
-
       const index =
         visibleFields.indexOf(
           active
         );
-
 
       if (
         index === -1
@@ -1926,12 +1265,10 @@
         return;
       }
 
-
       const next =
         visibleFields[
           index + 1
         ];
-
 
       if (next) {
 
@@ -1942,13 +1279,6 @@
     }
   );
 
-
-
-  /*
-  ============================================================
-  HTML SAFETY
-  ============================================================
-  */
 
   function escapeHTML(value) {
 
@@ -1977,13 +1307,6 @@
       );
   }
 
-
-
-  /*
-  ============================================================
-  START APP
-  ============================================================
-  */
 
   showDate();
 
